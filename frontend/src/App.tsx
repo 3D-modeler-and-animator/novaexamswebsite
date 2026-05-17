@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Booking from "./pages/Booking";
 import Admin from "./pages/Admin";
 import PracticeHub from "./pages/PracticeHub";
+import StudyAbroad from "./pages/StudyAbroad";
 import NotFound from "./pages/NotFound";
 
 import { useSession } from "@/hooks/useAuth"; 
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/contact-us" element={<Contact />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="/practice" element={<PracticeHub />} />
+            <Route path="/study-abroad" element={<StudyAbroad />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route
