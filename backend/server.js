@@ -44,6 +44,35 @@ app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/team", teamRoutes);
 
+// Groq AI chat proxy
+app.post("/api/chat", async (req, res) => {
+  try {
+    const { messages } = req.body;
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: "messages array required" });
+    }
+    const response = await axios.post(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        model: "llama3-8b-8192",
+        messages,
+        temperature: 0.7,
+        max_tokens: 300,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        },
+      }
+    );
+    res.json({ reply: response.data.choices[0].message.content });
+  } catch (err) {
+    console.error("Groq error:", err?.response?.data || err.message);
+    res.status(500).json({ error: "AI service unavailable" });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("Service is alive!");
 });
