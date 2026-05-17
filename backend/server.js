@@ -6,8 +6,6 @@ const resourceRoutes = require("./routes/resource.routes");
 const adminRoutes = require("./routes/admin.routes");
 const teamRoutes = require("./routes/team.routes");
 
-const prisma = require("./prisma/client");
-
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:3000"
@@ -52,16 +50,8 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 const BACKEND_URL = process.env.BACKEND_URL;
 
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-
-  try {
-    await prisma.$executeRawUnsafe(`ALTER TABLE "BlogPost" ADD COLUMN IF NOT EXISTS "imageUrl" TEXT`);
-    await prisma.$executeRawUnsafe(`ALTER TABLE "BlogPost" ADD COLUMN IF NOT EXISTS "imagePosition" TEXT DEFAULT 'top'`);
-    console.log("BlogPost columns ensured.");
-  } catch (err) {
-    console.error("Column check error:", err.message);
-  }
 
   setInterval(() => {
     axios.get(BACKEND_URL)

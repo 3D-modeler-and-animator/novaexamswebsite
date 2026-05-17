@@ -30,17 +30,15 @@ model Testimonial {
 }
 
 model BlogPost {
-  id            String   @id @default(uuid())
-  title         String
-  excerpt       String?
-  category      String?  
-  author        String?  
-  date          DateTime @default(now())
-  readTime      String?
-  imageUrl      String?
-  imagePosition String?  @default("top")
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  id         String   @id @default(uuid())
+  title      String
+  excerpt    String?
+  category   String?  
+  author     String?  
+  date       DateTime @default(now())
+  readTime   String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Resource {
